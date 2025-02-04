@@ -1909,6 +1909,278 @@ coqueiros:
 	lui $8, 0x1001		# end inicio
 	addi $8, $8, 28632	# sexto coqueiro
 	jal coqueiro1
+	
+casa:
+	lui $8, 0x1001		# end inicio
+	addi $8, $8, 28220	# começo da casa
+	add $11, $0, $8		# ponto de retorno
+	ori $10, $0, 0x2a2a2a	# contorno
+	addi $9, $0, 7
+	jal build
+	addi $8, $8, -540
+	addi $9, $0, 7
+	jal build
+	addi $8, $8, -540
+	addi $9, $0, 7
+	jal build
+	addi $8, $8, -548
+	addi $9, $0, 11
+	jal build
+	addi $8, $8, -556
+	addi $9, $0, 11
+	jal build
+	addi $8, $8, -552
+	addi $9, $0, 9
+	jal build
+	addi $8, $8, -544
+	addi $9, $0, 7
+	jal build
+	addi $8, $8, -536
+	addi $9, $0, 5
+	jal build
+	addi $8, $8, -528
+	addi $9, $0, 3
+	jal build
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0xe49d05	# parte interna da casa
+	addi $8, $8, -508
+	addi $9, $0, 5
+	jal build
+	addi $8, $8, -532
+	addi $9, $0, 5
+	jal build
+	addi $8, $8, -532
+	addi $9, $0, 5
+	jal build
+	addi $8, $8, -528
+	addi $9, $0, 3
+	jal build
+	addi $8, $8, -520
+	addi $9, $0, 1
+	jal build
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0xb04110	# telhado primeira parte
+	addi $8, $8, -2048
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, 20
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, -536
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, 12
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, -528
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, 4
+	addi $9, $0, 1
+	jal build
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0xb8573a	# telhado segunda parte
+	addi $8, $8, -2052
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, 28
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, -544
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, 20
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, -536
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, 12
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, -528
+	addi $9, $0, 3
+	jal build
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0x9e0909	# porta
+	addi $8, $8, -500
+	addi $9, $0, 1
+	jal build
+	addi $8, $8, -516
+	addi $9, $0, 1
+	jal build
+	ori $10, $0, 0x4a6575	# janela
+	addi $8, $8, -1028
+	addi $9, $0, 1
+	jal build
+	
+balao:
+	add $8, $0, $11		# retorno
+       	ori $5, $0, 0xffff  	# $5 <= 0x0000ffff
+       	sll $5, $5, 8       	# $5 <= 0x00ffff00
+       	addi $8, $8, -4604
+       	addi $9, $0, 5
+	jal cBalao
+	addi $8, $8, -536
+	addi $9, $0, 7
+	jal cBalao
+	addi $8, $8, -544
+	addi $9, $0, 9
+	jal cBalao
+	addi $8, $8, -552
+	addi $9, $0, 11
+	jal cBalao
+	addi $8, $8, -560
+	addi $9, $0, 13
+	jal cBalao
+	addi $8, $8, -564
+	addi $9, $0, 13
+	jal cBalao
+	addi $8, $8, -564
+	addi $9, $0, 13
+	jal cBalao
+	addi $8, $8, -560
+	addi $9, $0, 11
+	jal cBalao
+	addi $8, $8, -552
+	addi $9, $0, 9
+	jal cBalao
+	
+dirigivel:
+	lui $8, 0x1001
+	addi $8, $8, 4496
+	add $11, $0, $8		# ponto de retorno
+	addi $9, $0, 10
+	ori $10, $0, 0x6d6d6d	# cor cinza (primeira camada)
+	jal build
+	sw $10, 24($8)
+	sw $10, 28($8)
+	addi $8, $8, 460
+	addi $9, $0, 16
+	jal build
+	sw $10, 8($8)
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 440
+	addi $9, $0, 23
+	jal build
+	sw $10, 4($8)
+	addi $8, $8, 416
+	addi $9, $0, 24
+	jal build
+	sw $10, 4($8)
+	addi $8, $8, 412
+	addi $9, $0, 27
+	jal build
+	addi $8, $8, 400
+	addi $9, $0, 28
+	jal build
+	addi $8, $8, 400
+	addi $9, $0, 28
+	jal build
+	addi $8, $8, 404
+	addi $9, $0, 27
+	jal build
+	addi $8, $8, 408
+	addi $9, $0, 24
+	jal build
+	sw $10, 4($8)
+	addi $8, $8, 420
+	addi $9, $0, 23
+	jal build
+	sw $10, 4($8)
+	addi $8, $8, 428
+	addi $9, $0, 16
+	jal build
+	sw $10, 8($8)
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 460
+	addi $9, $0, 10
+	jal build
+	sw $10, 24($8)
+	sw $10, 28($8)
+	ori $10, $0, 0xd6d6d6	# cor cinza claro
+	addi $8, $8, 476
+	addi $9, $0, 8
+	jal build
+	addi $8, $8, 484
+	addi $9, $0, 6
+	jal build
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0x909090	# cor cinza (segunda camada)
+	addi $8, $8, 512
+	addi $9, $0, 10
+	jal build
+	sw $10, 24($8)
+	addi $8, $8, 460
+	addi $9, $0, 15
+	jal build
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 444
+	addi $9, $0, 18
+	jal build
+	sw $10, 12($8)
+	addi $8, $8, 436
+	addi $9, $0, 20
+	jal build
+	addi $8, $8, 432
+	addi $9, $0, 20
+	jal build
+	addi $8, $8, 432
+	addi $9, $0, 20
+	jal build
+	addi $8, $8, 432
+	addi $9, $0, 20
+	jal build
+	addi $8, $8, 436
+	addi $9, $0, 18
+	jal build
+	sw $10, 12($8)
+	addi $8, $8, 448
+	addi $9, $0, 15
+	jal build
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 464
+	addi $9, $0, 10
+	jal build
+	sw $10, 24($8)
+	addi $8, $8, 988
+	ori $10, $0, 0x6d6d6d	# cor cinza (cabine)
+	sw $10, 0($8)
+	sw $10, 12($8)
+	addi $8, $8, 516
+	sw $10, 0($8)
+	sw $10, 4($8)
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0xa4a4a4	# cor cinza (terceira camada)
+	addi $8, $8, 512
+	addi $9, $0, 8
+	jal build
+	addi $8, $8, 468
+	addi $9, $0, 13
+	jal build
+	addi $8, $8, 452
+	addi $9, $0, 17
+	jal build
+	addi $8, $8, 440
+	addi $9, $0, 19
+	jal build
+	addi $8, $8, 436
+	addi $9, $0, 19
+	jal build
+	addi $8, $8, 440
+	addi $9, $0, 17
+	jal build
+	addi $8, $8, 448
+	addi $9, $0, 14
+	jal build
+	addi $8, $8, 464
+	addi $9, $0, 10
+	jal build
+	
 fim:
 	addi $2, $0, 10
 	syscall
@@ -2121,4 +2393,21 @@ coqueiro1:
 	addi $9, $0, 1
 	jal build
 	add $31, $0, $13		# recupera o ponto de retorno
+	jr $31
+	
+#============================================================================================================================
+# Função Criar Balão
+# Regs usados 		$4, $5, $8 e $9
+# Regs sujos		$4 e $5
+
+cBalao:
+	beq $9, $0, fimBalao
+       	addi $2, $0, 42
+       	syscall
+       	sw $4, 0($8)
+       	addi $8, $8, 4
+       	addi $9, $9, -1
+       	j cBalao
+	
+fimBalao:
 	jr $31
