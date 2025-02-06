@@ -2381,10 +2381,50 @@ coqueiros:
 	lui $8, 0x1001		# end inicio
 	addi $8, $8, 28632	# sexto coqueiro
 	jal coqueiro1
-      	
+	
+#============================================================================================================================
+# FIM DO CENÁRIO
+#============================================================================================================================
+
+acao:
+	lui $8, 0x1001		# reg do dirigivel
+	addi $8, $8, 3984	# ponto de inicio do dirigivel
+	
+loopmov:
+
+	# desenho do dirigivel
+	jal dirigivel
+	add $8, $0, $11 # recupera o endereço inicial
+	jal timer
+	
+	# recupera cenário
+	jal copiaCenDirigivel
+	
+	# atualiza ponto de desenho
+	addi $8, $8, -4	# proximo ponto
+	j loopmov
+
 fim:
 	addi $2, $0, 10
 	syscall
+
+                  
+#============================================================================================================================
+# Função Timer
+# Regs usados 		$16 e $29
+# Regs sujos		-
+
+timer: sw $16, 0($29)
+       addi $29, $29, -4
+       addi $16, $0, 100000	# velocidade do movimento
+forT:  beq $16, $0, fimT
+       nop
+       nop
+       addi $16, $16, -1      
+       j forT                  
+fimT:  addi $29, $29, 4                                                    
+       lw $16, 0($29)          
+       jr $31
        
 #============================================================================================================================
 # Função Criar
@@ -2400,6 +2440,96 @@ build:
 	j build
 	
 fimBuild:
+	jr $31
+	
+#============================================================================================================================
+# Função Criar NPCs
+# Regs usados 		$8 e $9
+# Regs sujos		-
+
+npc:
+	beq $9, $0, fimNpc
+	sw $10, 0($8)		
+	addi $8, $8, 4
+	addi $9, $9, -1
+	j npc
+	
+fimNpc:
+	jr $31
+	
+#============================================================================================================================
+# Função Copia do Cenário para o Dirigivel
+# Regs usados 		$12
+# Regs sujos		-
+
+copiaCenDirigivel:
+	
+	lw $12, 32804($8)
+	sw $12, 36($8)
+	
+	lw $12, 32836($8)
+	sw $12, 68($8)
+	
+	lw $12, 33328($8)
+	sw $12, 560($8)
+	
+	lw $12, 33348($8)
+	sw $12, 580($8)
+	
+	lw $12, 33860($8)
+	sw $12, 1092($8)
+	
+	lw $12, 33868($8)
+	sw $12, 1100($8)
+	
+	lw $12, 34372($8)
+	sw $12, 1604($8)
+	
+	lw $12, 34380($8)
+	sw $12, 1612($8)
+	
+	lw $12, 34892($8)
+	sw $12, 2124($8)
+	
+	lw $12, 35404($8)
+	sw $12, 2636($8)
+	
+	lw $12, 35916($8)
+	sw $12, 3148($8)
+	
+	lw $12, 36428($8)
+	sw $12, 3660($8)
+	
+	lw $12, 36932($8)
+	sw $12, 4164($8)
+	
+	lw $12, 36940($8)
+	sw $12, 4172($8)
+	
+	lw $12, 37444($8)
+	sw $12, 4676($8)
+	
+	lw $12, 37452($8)
+	sw $12, 4684($8)
+	
+	lw $12, 37936($8)
+	sw $12, 5168($8)
+	
+	lw $12, 37956($8)
+	sw $12, 5188($8)
+	
+	lw $12, 38436($8)
+	sw $12, 5668($8)
+	
+	lw $12, 38468($8)
+	sw $12, 5700($8)
+	
+	lw $12, 38944($8)
+	sw $12, 6176($8)
+	
+	lw $12, 39452($8)
+	sw $12, 6684($8)
+	
 	jr $31
 	
 #============================================================================================================================
@@ -2594,5 +2724,146 @@ coqueiro1:
 	addi $8, $8, 4
 	addi $9, $0, 1
 	jal build
+	add $31, $0, $13		# recupera o ponto de retorno
+	jr $31
+	
+#============================================================================================================================
+# Função Dirigivel
+# Regs usados 		$8, $9, $10, $11 e $13
+# Regs sujos		$8, $11, $13
+
+dirigivel:
+	add $13, $0, $31	# ponto de retorno da funcao
+	add $11, $0, $8		# salva o end inicial do dirigivel
+	addi $9, $0, 10
+	ori $10, $0, 0x6d6d6d	# cor cinza (primeira camada)
+	jal npc
+	sw $10, 24($8)
+	sw $10, 28($8)
+	addi $8, $8, 460
+	addi $9, $0, 16
+	jal npc
+	sw $10, 8($8)
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 440
+	addi $9, $0, 23
+	jal npc
+	sw $10, 4($8)
+	addi $8, $8, 416
+	addi $9, $0, 24
+	jal npc
+	sw $10, 4($8)
+	addi $8, $8, 412
+	addi $9, $0, 27
+	jal npc
+	addi $8, $8, 400
+	addi $9, $0, 28
+	jal npc
+	addi $8, $8, 400
+	addi $9, $0, 28
+	jal npc
+	addi $8, $8, 404
+	addi $9, $0, 27
+	jal npc
+	addi $8, $8, 408
+	addi $9, $0, 24
+	jal npc
+	sw $10, 4($8)
+	addi $8, $8, 420
+	addi $9, $0, 23
+	jal npc
+	sw $10, 4($8)
+	addi $8, $8, 428
+	addi $9, $0, 16
+	jal npc
+	sw $10, 8($8)
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 460
+	addi $9, $0, 10
+	jal npc
+	sw $10, 24($8)
+	sw $10, 28($8)
+	ori $10, $0, 0xd6d6d6	# cor cinza claro
+	addi $8, $8, 476
+	addi $9, $0, 8
+	jal npc
+	addi $8, $8, 484
+	addi $9, $0, 6
+	jal npc
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0x909090	# cor cinza (segunda camada)
+	addi $8, $8, 512
+	addi $9, $0, 10
+	jal npc
+	sw $10, 24($8)
+	addi $8, $8, 460
+	addi $9, $0, 15
+	jal npc
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 444
+	addi $9, $0, 18
+	jal npc
+	sw $10, 12($8)
+	addi $8, $8, 436
+	addi $9, $0, 20
+	jal npc
+	addi $8, $8, 432
+	addi $9, $0, 20
+	jal npc
+	addi $8, $8, 432
+	addi $9, $0, 20
+	jal npc
+	addi $8, $8, 432
+	addi $9, $0, 20
+	jal npc
+	addi $8, $8, 436
+	addi $9, $0, 18
+	jal npc
+	sw $10, 12($8)
+	addi $8, $8, 448
+	addi $9, $0, 15
+	jal npc
+	sw $10, 12($8)
+	sw $10, 16($8)
+	addi $8, $8, 464
+	addi $9, $0, 10
+	jal npc
+	sw $10, 24($8)
+	addi $8, $8, 988
+	ori $10, $0, 0x6d6d6d	# cor cinza (cabine)
+	sw $10, 0($8)
+	sw $10, 12($8)
+	addi $8, $8, 516
+	sw $10, 0($8)
+	sw $10, 4($8)
+	add $8, $0, $11		# retorno
+	ori $10, $0, 0xa4a4a4	# cor cinza (terceira camada)
+	addi $8, $8, 512
+	addi $9, $0, 8
+	jal npc
+	addi $8, $8, 468
+	addi $9, $0, 13
+	jal npc
+	addi $8, $8, 452
+	addi $9, $0, 17
+	jal npc
+	addi $8, $8, 440
+	addi $9, $0, 19
+	jal npc
+	addi $8, $8, 436
+	addi $9, $0, 19
+	jal npc
+	addi $8, $8, 440
+	addi $9, $0, 17
+	jal npc
+	addi $8, $8, 448
+	addi $9, $0, 14
+	jal npc
+	addi $8, $8, 464
+	addi $9, $0, 10
+	jal npc
 	add $31, $0, $13		# recupera o ponto de retorno
 	jr $31

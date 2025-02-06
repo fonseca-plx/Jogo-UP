@@ -2048,7 +2048,7 @@ balao:
 	
 dirigivel:
 	lui $8, 0x1001
-	addi $8, $8, 4496
+	addi $8, $8, 4504
 	add $11, $0, $8		# ponto de retorno
 	addi $9, $0, 10
 	ori $10, $0, 0x6d6d6d	# cor cinza (primeira camada)
@@ -2180,6 +2180,30 @@ dirigivel:
 	addi $8, $8, 464
 	addi $9, $0, 10
 	jal build
+	
+aviao:
+	lui $8, 0x1001
+	addi $8, $8, 14220
+	add $11, $0, $8		# ponto de retorno
+	ori $10, $0, 0x7c0000	# cor vermelho escuro
+	sw $10, 24($8)
+	addi $8, $8, 512
+	addi $9, $0, 7
+	jal build
+	addi $8, $8, 484
+	addi $9, $0, 7
+	jal build
+	add $8, $0, $11
+	ori $10, $0, 0x845d34	# cor marrom claro (cabeça do piloto)
+	sw $10, 12($8)
+	addi $8, $8, 512
+	ori $10, $0, 0xa39f9f	# cor cinza claro (frente do avião)
+	sw $10, 0($8)
+	addi $8, $8, 512
+	sw $10, 0($8)
+	ori $10, $0, 0xc60000	# cor vermelho claro (leme e asa do avião)
+	sw $10, 12($8)
+	sw $10, 16($8)	
 	
 fim:
 	addi $2, $0, 10

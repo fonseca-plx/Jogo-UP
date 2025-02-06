@@ -1,3 +1,8 @@
+# Teste de movimento de um ponto pelo cenário utilizando o teclado
+# 
+# O ponto se move automaticamente e muda de direção a depender da entrada do teclado
+#
+
 .text
 
 main:
@@ -2381,10 +2386,71 @@ coqueiros:
 	lui $8, 0x1001		# end inicio
 	addi $8, $8, 28632	# sexto coqueiro
 	jal coqueiro1
+	
+#============================================================================================================================
+# FIM DO CENÁRIO
+#============================================================================================================================
+
+ponto:
+	lui $8, 0x1001		# end inicio
+      	ori $20, 0xff0000	# vermelho
+      	lui $21, 0xffff		# detecção do teclado
+      	addi $10, $0, 4		# $10 = direção do movimento
+      	addi $25, $0, ' '
+      	addi $11, $0, 'a'
+      	addi $12, $0, 'd'
+      	addi $13, $0, 's'
+      	addi $14, $0, 'w'
       	
+loopmov: 
+      	sw $20, 0($8)		# carrega o ponto no espaço atual
+	jal timer
+      	lw $9, 32768($8)	# recupera o cenário de volta
+      	sw $9, 0($8)		# carrega o cenário de volta no espaço atual
+      	add $8, $8, $10
+      	
+      	lw $22, 0($21)		# verifica se veio alguma entrada do teclado
+      	beq $22, $0, loopmov	# se $22 for igual a zero é pq nada foi digitado então salta para 'cont'
+      	lw $23, 4($21)		# $21 é igual a 0xffff0000 + 4 = 0xffff0004 que é o end para onde vai o conteúdo da entrada do teclado. Entao $23 vai receber o que foi digitado
+      	beq $23, $25, fim	# se digitou espaço o jogo termina
+      	beq $23, $11, esq	# se digitou 'a' vai para esquerda
+      	beq $23, $12, dir	# se digitou 'd' vai para direita
+      	beq $23, $13, baixo	# se digitou 's' vai para baixo
+      	beq $23, $14, cima	# se digitou 'w' vai para cima
+      	j loopmov
+      	 
+esq:  addi $10, $0, -4      
+      j loopmov
+     
+dir:  addi $10, $0, 4
+      j loopmov  
+     
+baixo:  addi $10, $0, +512
+      j loopmov
+     
+cima:  addi $10, $0, -512
+      j loopmov       	
+
 fim:
 	addi $2, $0, 10
 	syscall
+
+#============================================================================================================================
+# Função Timer
+# Regs usados 		$16 e $29
+# Regs sujos		-
+
+timer: sw $16, 0($29)
+       addi $29, $29, -4
+       addi $16, $0, 20000	# velocidade do movimento
+forT:  beq $16, $0, fimT
+       nop
+       nop
+       addi $16, $16, -1      
+       j forT                  
+fimT:  addi $29, $29, 4                                                    
+       lw $16, 0($29)          
+       jr $31
        
 #============================================================================================================================
 # Função Criar

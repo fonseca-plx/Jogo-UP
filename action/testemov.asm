@@ -2381,10 +2381,43 @@ coqueiros:
 	lui $8, 0x1001		# end inicio
 	addi $8, $8, 28632	# sexto coqueiro
 	jal coqueiro1
+	
+ponto:
+	lui $8, 0x1001		# end inicio
+      	ori $20, 0xff0000	# vermelho
+      	addi $10, $0, 7168	# quantidade de casas p/ andar
+      	
+loopmov: 
+	beq $10, $0, fim
+      	sw $20, 0($8)		# carrega o ponto no espaço atual
+      	sw $20, 4($8)		# carrega o ponto no espaço seguinte
+      	lw $9, 32768($8)	# recupera o cenário de volta
+      	sw $9, 0($8)		# carrega o cenário de volta no espaço atual
+      	addi $8, $8, 4
+      	jal timer
+      	addi $10, $10, -1
+      	j loopmov
       	
 fim:
 	addi $2, $0, 10
 	syscall
+	
+#============================================================================================================================
+# Função Timer
+# Regs usados 		$16 e $29
+# Regs sujos		-
+
+timer: sw $16, 0($29)
+       addi $29, $29, -4
+       addi $16, $0, 2000	# velocidade do movimento
+forT:  beq $16, $0, fimT
+       nop
+       nop
+       addi $16, $16, -1      
+       j forT                  
+fimT:  addi $29, $29, 4                                                    
+       lw $16, 0($29)          
+       jr $31
        
 #============================================================================================================================
 # Função Criar
