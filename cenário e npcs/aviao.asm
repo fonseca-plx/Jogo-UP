@@ -92,28 +92,39 @@ fila2:
 	j fila2
 	
 aviao:
-	lui $8, 0x1001
-	addi $8, $8, 14224
-	add $11, $0, $8		# ponto de retorno
+	lui $6, 0x1001
+	addi $6, $6, 16384	# inicio do aviao
+	
+	add $13, $0, $31	# ponto de retorno da funcao
+	add $12, $0, $6		# salva o end inicial do aviao
 	ori $10, $0, 0x7c0000	# cor vermelho escuro
-	sw $10, 24($8)
-	addi $8, $8, 512
-	addi $9, $0, 7
-	jal cAviao
-	addi $8, $8, 484
-	addi $9, $0, 7
-	jal cAviao
-	add $8, $0, $11
-	ori $10, $0, 0x845d34	# cor marrom claro (cabeça do piloto)
-	sw $10, 12($8)
-	addi $8, $8, 512
-	ori $10, $0, 0xa39f9f	# cor cinza claro (frente do avião)
-	sw $10, 0($8)
-	addi $8, $8, 512
-	sw $10, 0($8)
-	ori $10, $0, 0xc60000	# cor vermelho claro (leme e asa do avião)
-	sw $10, 12($8)
-	sw $10, 16($8)	
+	sw $10, 0($6)
+	ori $10, $0, 0x845d34	# cor marrom (piloto)
+	sw $10, 12($6)
+	sw $10, 16($6)
+	ori $10, $0, 0x7c0000	# cor vermelho escuro
+	addi $6, $6, 512
+	sw $10, 0($6)
+	sw $10, 4($6)
+	sw $10, 8($6)
+	sw $10, 12($6)
+	sw $10, 16($6)
+	sw $10, 20($6)
+	ori $10, $0, 0xa39f9f	# cor cinza
+	sw $10, 24($6)
+	ori $10, $0, 0x7c0000	# cor vermelho escuro
+	addi $6, $6, 512
+	sw $10, 0($6)
+	sw $10, 4($6)
+	ori $10, $0, 0xc60000	# cor vermelho claro
+	sw $10, 8($6)
+	sw $10, 12($6)
+	ori $10, $0, 0x7c0000	# cor vermelho escuro
+	sw $10, 16($6)
+	sw $10, 20($6)
+	ori $10, $0, 0xa39f9f	# cor cinza
+	sw $10, 24($6)
+	add $31, $0, $13	# recupera o ponto de retorno
 fim:
 	addi $2, $0, 10
 	syscall
@@ -155,19 +166,4 @@ criaNuvens:
 	j criaNuvens
 	
 fimLoop:
-	jr $31
-
-#============================================================================================================================
-# Função Criar Avião
-# Regs usados 		$8 e $9
-# Regs sujos		-
-
-cAviao:
-	beq $9, $0, fimAviao
-	sw $10, 0($8)		
-	addi $8, $8, 4
-	addi $9, $9, -1
-	j cAviao
-	
-fimAviao:
 	jr $31
