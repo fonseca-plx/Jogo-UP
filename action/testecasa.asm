@@ -3626,6 +3626,8 @@ loopmov:
 	add $7, $0, $14		# recupera o endereço inicial da casa
 	jal timer
 	
+	# colisoes
+	
 	# recupera cenário
 	jal copiaCenDirigivel
 	jal copiaCenAviao
