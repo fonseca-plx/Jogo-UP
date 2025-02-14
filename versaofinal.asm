@@ -3613,11 +3613,12 @@ acao:
       	addi $17, $0, 'd'
       	addi $18, $0, 's'
       	addi $19, $0, 'w'
+      	addi $26, $0, ' '
       	
       	lui $24, 0x1001
       	addi $24, $24, 28160	# limite de descida da casa
       	
-      	lui $25, 0x1001
+      	lui $25, 0x1001		# vitória
 	
 loopmov:
 
@@ -4008,10 +4009,15 @@ vitoria:
 	sw $10, -2560($8)
 	sw $10, -3072($8)
 	sw $10, -3584($8)
-
-fim:
+	
 	addi $2, $0, 10
 	syscall
+
+fim:
+	lw $22, 4($20)		# $22 recebe o que foi digitado
+	beq $22, $26, main	# caso digite espaço volta para o inicio
+	jal timer
+	j fim
     
 #============================================================================================================================
 # Função Criar
