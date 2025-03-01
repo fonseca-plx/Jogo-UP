@@ -5400,7 +5400,7 @@ casa:
 
 timer: sw $15, 0($29)
        addi $29, $29, -4
-       addi $15, $0, 30000	# velocidade do movimento
+       addi $15, $0, 22000	# velocidade do movimento
 forT:  beq $15, $0, fimT
        nop
        nop
